@@ -28,6 +28,11 @@ const userss = [
         "name": 'ishi'
     }]
 
+
+
+
+
+
 app.get("/user/:id", (req, res) => {
     const userId = Number(req.params.id);
     const user = userss.find(u => u.uid === userId);
@@ -40,11 +45,13 @@ app.get("/user/:id", (req, res) => {
 });
 
 
+
+
 app.post("/user", (req, res) => {
     const newUser = {
         uid: req.body.uid,
-        name: req.body.title,
-        bonus: req.body.price
+        name: req.body.name,
+        bonus: req.body.bonus
     };
 
     userss.push(newUser);
@@ -54,6 +61,11 @@ app.post("/user", (req, res) => {
         user: newUser
     });
 });
+
+
+
+
+
 
 
 app.put("/users/:id", (req, res) => {
@@ -78,36 +90,39 @@ app.put("/users/:id", (req, res) => {
     });
 });
 
-// app.patch("/pro/:id", (req, res) => {
-//   const userId = Number(req.params.id);
-//   const user = data.find(u => u.id === userId);
+app.patch("/use/:id", (req, res) => {
+  const userId = Number(req.params.id);
+  const user = userss.find(u => u.uid === userId);
 
-//   if (!user) {
-//     return res.status(404).json({ message: "User not found" });
-//   }
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-//   if (req.body.title) user.title = req.body.title;
-//   if (req.body.price) user.price = req.body.price;
+  if (req.body.name) user.name = req.body.name;
+  if (req.body.bonus) user.bonus = req.body.bonus;
 
-//   res.status(200).json({
-//     message: "User updated",
-//     user
-//   });
-// });
+  res.status(200).json({
+    message: "User updated",
+    user
+  });
+});
 
 
-// app.delete("/proprer/:id", (req, res) => {
-//     const userId = Number(req.params.id);
-//     const index = data.findIndex(u => u.id === userId);
+app.delete("/stud/:id", (req, res) => {
+    const userId = Number(req.params.id);
+    const index = userss.findIndex(u => u.uid === userId);
 
-//     if (index === -1) {
-//         return res.status(404).json({ message: "User not found" });
-//     }
+    if (index === -1) {
+        return res.status(404).json({ message: "User not found" });
+    }
 
-//     data.splice(index, 1);
+    userss.splice(index, 1);
 
-//     res.status(204).end();
-// });
+    res.status(204).end();
+});
+
+
+
 
 
 app.use(express.json());
